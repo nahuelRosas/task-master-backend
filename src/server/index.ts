@@ -3,6 +3,7 @@ import morgan, { TokenIndexer } from "morgan";
 import express, { Express } from "express";
 import cookieParser from "cookie-parser";
 import { logInfo } from "@/libs/logInfo";
+import routes from "@/routes";
 import compression from "compression";
 import bodyParser from "body-parser";
 import helmet from "helmet";
@@ -58,7 +59,8 @@ app.use(
   bodyParser.json({ limit: "50mb" }),
   bodyParser.urlencoded({ limit: "50mb", extended: true }),
   cookieParser(),
-  compression()
+  compression(),
+  routes
 );
 
 // Server Setup
