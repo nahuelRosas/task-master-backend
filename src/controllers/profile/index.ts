@@ -23,6 +23,13 @@ export async function getProfile(
         email: user.email,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatarUrl: user.avatarUrl,
+        bio: user.bio,
+        role: user.role,
+        lastLogin: user.lastLogin,
+        tasks: user.tasks,
       });
       logInfo({
         logMessage: "Successfully retrieved profile",
