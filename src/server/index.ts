@@ -63,12 +63,4 @@ app.use(
   routes
 );
 
-// Server Setup
-export const server = app.listen(PORT || 3000, () => {
-  logInfo({
-    logMessage: `Server running on port ${PORT || 3000}`,
-    logType: "success",
-  });
-});
-
 export default app;
