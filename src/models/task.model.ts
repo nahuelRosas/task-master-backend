@@ -44,7 +44,7 @@ const taskSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Task: Model<ITask> = model<ITask>("User", taskSchema);

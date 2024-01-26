@@ -15,7 +15,7 @@ const { JWT_SECRET } = process.env;
 export function validateToken(
   req: RequestWithUser,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const { accessToken } = req.cookies;
   if (!JWT_SECRET) {

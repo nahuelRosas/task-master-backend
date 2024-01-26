@@ -13,7 +13,7 @@ import { TokenIndexer } from "morgan";
 export default function configureMorganOptions(
   tokens: TokenIndexer,
   req: IncomingMessage,
-  res: ServerResponse
+  res: ServerResponse,
 ): null | undefined {
   if (!tokens) return null;
 

@@ -10,7 +10,7 @@ connectDataBase()
       logInfo({
         logMessage: `Server running on port ${PORT || 3000}`,
         logType: "success",
-      })
+      }),
     );
   })
   .catch((err) => {

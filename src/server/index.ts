@@ -31,7 +31,7 @@ app.use(
   bodyParser.urlencoded({ limit: "50mb", extended: true }),
   cookieParser(),
   compression(),
-  routes
+  routes,
 );
 
 export default app;

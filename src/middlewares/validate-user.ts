@@ -13,7 +13,7 @@ import { Response } from "express";
  */
 export default async function validateUser(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ) {
   try {
     if (!req.user) {

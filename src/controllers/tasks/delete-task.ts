@@ -13,7 +13,7 @@ import Task from "@/models/task.model";
  */
 export async function deleteTask(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);

@@ -12,7 +12,7 @@ import { Response } from "express";
  */
 export async function getProfile(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);

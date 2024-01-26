@@ -47,7 +47,7 @@ export function logInfo({
     consoleColors.warning(`${formattedLogMessage}`);
   } else if (logType === "error") {
     consoleColors.error(
-      `\n${formattedLogMessage} \n${humanReadableDateTime} ---- The log has been modified => ${TEMP_DIR}`
+      `\n${formattedLogMessage} \n${humanReadableDateTime} ---- The log has been modified => ${TEMP_DIR}`,
     );
   } else if (logType === "success") {
     consoleColors.success(`${formattedLogMessage}`);
