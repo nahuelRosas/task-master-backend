@@ -63,7 +63,7 @@ export async function login(req: Request, res: Response): Promise<void> {
       logMessage: `User ${user.username} logged in`,
       logType: "success",
     });
-    res.status(201).json({
+    res.status(200).send({
       id: user._id,
       username: user.username,
       email: user.email,
