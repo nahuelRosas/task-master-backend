@@ -13,12 +13,12 @@ import { Response } from "express";
  */
 export async function getTasks(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
     if (user) {
-      const tasks = await Task.find({ owner: user._id });
+      const tasks = await Task.find({ owner: user._id }).populate("owner");
       res.status(200).json(tasks);
     }
   } catch (error) {
