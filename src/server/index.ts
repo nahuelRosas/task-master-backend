@@ -9,21 +9,13 @@ import helmet from "helmet";
 import cors from "cors";
 
 const app: Express = express();
-
 app.use(
   morgan(configureMorganOptions),
   helmet(),
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Access-Control-Allow-Headers",
-      "Access-Control-Allow-Origin",
-      "Access-Control-Allow-Methods",
-      "Access-Control-Allow-Credentials",
-    ],
+    origin: "https://client-rouge-two.vercel.app",
+    methods: "GET,PUT,POST,DELETE",
+    credentials: true,
   }),
   express.json(),
   express.urlencoded({ extended: true }),
@@ -31,7 +23,7 @@ app.use(
   bodyParser.urlencoded({ limit: "50mb", extended: true }),
   cookieParser(),
   compression(),
-  routes,
+  routes
 );
 
 export default app;

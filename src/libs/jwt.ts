@@ -56,7 +56,6 @@ function createCookie({
   res.cookie("accessToken", encoded, {
     sameSite: "none",
     secure: true,
-    httpOnly: false,
   });
   return encoded;
 }
