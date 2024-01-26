@@ -4,6 +4,13 @@ import { Response } from "express";
 import validateUser from "@/middlewares/validate-user";
 import Task from "@/models/task.model";
 
+/**
+ * Retrieves a task by its ID and owner.
+ *
+ * @param req - The request object containing user information.
+ * @param res - The response object used to send the task or error message.
+ * @returns A promise that resolves when the task is retrieved or rejects with an error.
+ */
 export async function getTask(
   req: RequestWithUser,
   res: Response
