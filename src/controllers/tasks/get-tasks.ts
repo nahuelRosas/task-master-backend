@@ -4,6 +4,13 @@ import { logInfo } from "@/libs/log-info";
 import Task from "@/models/task.model";
 import { Response } from "express";
 
+/**
+ * Retrieves tasks owned by the authenticated user.
+ *
+ * @param req - The request object containing user information.
+ * @param res - The response object used to send the tasks.
+ * @returns A Promise that resolves to void.
+ */
 export async function getTasks(
   req: RequestWithUser,
   res: Response
