@@ -23,7 +23,8 @@ function configureMorganOptions(
   if (!tokens) return null;
 
   const status = tokens?.status?.(req, res);
-  const response = `
+  const response = `We got a request!
+  
     Remote Addr: ${tokens?.["remote-addr"]?.(req, res)}
     Remote User: ${tokens?.["remote-user"]?.(req, res)}
     Method: ${tokens?.method?.(req, res)}
@@ -31,7 +32,7 @@ function configureMorganOptions(
     HTTP Version: ${tokens?.["http-version"]?.(req, res)}
     Status: ${status}
     Response Time: ${tokens["response-time"]?.(req, res)}ms
-    User-Agent:${tokens["user-agent"]?.(req, res)}`;
+    User-Agent: ${tokens["user-agent"]?.(req, res)}`;
 
   if (status) {
     const logType =
