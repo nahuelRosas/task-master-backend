@@ -26,7 +26,7 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true,
       unique: true,
-      minlength: 3,
+      minlength: 1,
       maxlength: 20,
     },
     email: {
@@ -40,7 +40,6 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true,
       minlength: 8,
-      maxlength: 120,
     },
     firstName: {
       type: String,
@@ -64,7 +63,7 @@ const userSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 const User: Model<IUser> = model<IUser>("User", userSchema);
