@@ -1,7 +1,5 @@
 import dotenv from "dotenv";
 import colors from "colors";
-import path from "path";
-import fs from "fs";
 dotenv.config();
 colors.enable();
 
@@ -26,54 +24,20 @@ const consoleColors = {
  */
 export function logInfo({
   logMessage,
-  filename,
   logType,
-  shouldRestart,
-  dir,
 }: {
   logMessage?: unknown | string | object;
   filename?: string;
   logType?: "error" | "info" | "success" | "warning" | "rainbow";
   shouldRestart?: boolean;
-  dir?: string;
 }): void {
-  const currentFilename = filename || __filename;
-  const restart = shouldRestart || false;
-
-  const handleProcessError = (err: Error | null) => {
-    if (err !== null) {
-      consoleColors.error(`Error in logInfo: ${err}`);
-      return logInfo({ logMessage: err });
-    }
-  };
   const timestamp = Date.now();
   const humanReadableDateTime = new Date(timestamp).toLocaleString();
-  const messageBase = `${humanReadableDateTime} ---- `;
-  const logDirectory = dir || TEMP_DIR || "log/console.log";
-  //check if exist logDirectory, if not, check any folder splited by "/" and create one by one and create file at the end
-  const dirArray = logDirectory.split("/");
-  let dirPath = "";
-  for (let i = 0; i < dirArray.length - 1; i++) {
-    dirPath += `${dirArray[i]}/`;
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath);
-    }
-  }
 
-  const basename = path.basename(currentFilename);
   const formattedLogMessage =
     typeof logMessage === "string"
       ? logMessage
       : JSON.stringify(logMessage, null, 2);
-
-  const logEntry =
-    logType === "info" || logType === "rainbow"
-      ? `\n ${messageBase} ${basename} ---- ${formattedLogMessage}`
-      : logType === "error"
-        ? `\n${messageBase}${basename} ---- ERROR: ${formattedLogMessage}`
-        : logType === "success"
-          ? `\n${messageBase}${basename} ---- SUCCESS: ${formattedLogMessage}`
-          : `\n${messageBase}${basename} ---- WARNING: ${formattedLogMessage}`;
 
   if (logType === "info") {
     consoleColors.info(`${formattedLogMessage}`);
@@ -90,8 +54,4 @@ export function logInfo({
   } else {
     consoleColors.rainbow(`${formattedLogMessage}`);
   }
-
-  restart
-    ? fs.writeFile(logDirectory, logEntry, handleProcessError)
-    : fs.appendFile(logDirectory, logEntry, handleProcessError);
 }
