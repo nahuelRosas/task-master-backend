@@ -40,6 +40,7 @@ export async function getProfile(
       return;
     }
     res.status(200).json({
+      id: user._id,
       username: user.username,
       email: user.email,
       createdAt: user.createdAt,
