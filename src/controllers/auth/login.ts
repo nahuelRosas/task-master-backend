@@ -72,10 +72,13 @@ export async function login(req: Request, res: Response): Promise<void> {
       token,
     });
   } catch (error) {
-    logInfo({
-      logMessage: `Error logging in: ${error}`,
-      logType: "error",
-    });
-    res.status(500).send(error);
+    if (error instanceof Error) {
+      logInfo({
+        logMessage: `Error logging in: ${error.message}`,
+        logType: "error",
+      });
+      res.status(500).send(error.message);
+      return;
+    }
   }
 }
