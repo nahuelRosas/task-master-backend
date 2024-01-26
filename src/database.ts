@@ -1,4 +1,4 @@
-import { logInfo } from "./libs/logInfo";
+import { logInfo } from "./libs/log-info";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();

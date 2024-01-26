@@ -1,5 +1,5 @@
 import { Secret, SignOptions, sign } from "jsonwebtoken";
-import { logInfo } from "./logInfo";
+import { logInfo } from "./log-info";
 import { Response } from "express";
 
 /**

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { logInfo } from "@/libs/logInfo";
+import { logInfo } from "@/libs/log-info";
 
 /**
  * Logs out the user by clearing the token cookie and sending a success message.

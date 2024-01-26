@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { logInfo } from "@/libs/logInfo";
+import { logInfo } from "@/libs/log-info";
 import { TokenIndexer } from "morgan";
 
 /**

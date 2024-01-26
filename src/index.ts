@@ -1,5 +1,5 @@
 import connectDataBase from "./database";
-import { logInfo } from "./libs/logInfo";
+import { logInfo } from "./libs/log-info";
 import app from "./server";
 
 const { PORT } = process.env;
