@@ -3,8 +3,6 @@ import colors from "colors";
 dotenv.config();
 colors.enable();
 
-const { TEMP_DIR } = process.env;
-
 const consoleColors = {
   error: (message: string) => console.log(colors.bgRed(message).bold),
   info: (message: string) => console.log(colors.bgMagenta(message).bold),
@@ -39,19 +37,19 @@ export function logInfo({
       ? logMessage
       : JSON.stringify(logMessage, null, 2);
 
+  const message = `\n${humanReadableDateTime}\n${formattedLogMessage} \n`;
+
   if (logType === "info") {
-    consoleColors.info(`${formattedLogMessage}`);
+    consoleColors.info(message);
   } else if (logType === "rainbow") {
-    consoleColors.rainbow(`${formattedLogMessage}`);
+    consoleColors.rainbow(message);
   } else if (logType === "warning") {
-    consoleColors.warning(`${formattedLogMessage}`);
+    consoleColors.warning(message);
   } else if (logType === "error") {
-    consoleColors.error(
-      `\n${formattedLogMessage} \n${humanReadableDateTime} ---- The log has been modified => ${TEMP_DIR}`,
-    );
+    consoleColors.error(message);
   } else if (logType === "success") {
-    consoleColors.success(`${formattedLogMessage}`);
+    consoleColors.success(message);
   } else {
-    consoleColors.rainbow(`${formattedLogMessage}`);
+    consoleColors.rainbow(message);
   }
 }
