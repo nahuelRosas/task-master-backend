@@ -4,9 +4,9 @@
   "license": "MIT",
   "author": "Nahuel Rosas <nahuel.rosas@mi.unc.edu.ar>",
   "description": "Technical test for a CRUD API",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/api/index.js",
+  "module": "./dist/api/index.mjs",
+  "types": "./dist/api/index.d.ts",
   "files": [
     "dist/**"
   ],

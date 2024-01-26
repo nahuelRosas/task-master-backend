@@ -12,5 +12,6 @@ export default defineConfig({
   entry: {
     index: "./src/index.ts",
   },
+  outDir: "./dist/api/",
   minifyWhitespace: true,
 });
