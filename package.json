@@ -15,7 +15,7 @@
     "dev": "tsup-node src/index.ts --watch --onSuccess 'node dist/index.js'",
     "start": "node dist/index.js",
     "lint": "eslint \"src/**/*.ts*\"",
-    "clean": "rimraf dist node_modules",
+    "clean": "rimraf dist node_modules .pnpm-store .pnpm-lock.yaml coverage .nyc_output package-lock.json",
     "typecheck": "tsc --noEmit",
     "depCheck": "depcheck",
     "test": "jest --coverage --detectOpenHandles --forceExit"
@@ -32,8 +32,7 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
-    "morgan": "^1.10.0",
-    "typescript": "^5.3.3"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -61,7 +60,8 @@
     "terser": "^5.27.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
