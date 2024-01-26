@@ -3,13 +3,18 @@ import { logInfo } from "@/libs/logInfo";
 import User from "@/models/user.model";
 import { hash } from "bcryptjs";
 
-export async function register(req: Request, res: Response) {
+/**
+ * Registers a new user.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns A Promise that resolves to void.
+ */
+export async function register(req: Request, res: Response): Promise<void> {
   const { email, password, username } = req.body;
   try {
-    const passwordHash = await hash(password, 500);
-
+    const passwordHash = await hash(password, 10);
     const user = new User({ email, password: passwordHash, username });
-
     await user.save();
     logInfo({
       logMessage: `User ${user.username} created`,
@@ -21,11 +26,6 @@ export async function register(req: Request, res: Response) {
       logMessage: `Error creating user: ${error}`,
       logType: "error",
     });
-
     res.status(500).send(error);
   }
-}
-
-export function login(req: Request, res: Response) {
-  res.send("login");
 }
