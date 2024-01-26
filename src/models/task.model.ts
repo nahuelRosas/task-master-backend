@@ -1,4 +1,4 @@
-import { Model, Schema, model } from "mongoose";
+import mongoose, { Model, Schema, model } from "mongoose";
 
 export interface ITask {
   name: string;
@@ -11,6 +11,7 @@ export interface ITask {
   priority?: "low" | "medium" | "high" | "urgent";
   assignedTo?: string;
   subtasks?: ITask[];
+  owner: mongoose.Schema.Types.ObjectId;
 }
 
 /**
@@ -35,6 +36,11 @@ const taskSchema: Schema = new Schema(
     },
     assignedTo: String,
     subtasks: [Schema.Types.Mixed],
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
