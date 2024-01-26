@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
       <title>Technical Test Crud</title>
     </head>
     <body>
-        <h1>Technical Test Crud</h1>
+        <h1>Technical Test Crud - Nahuel Rosas</h1>
         <p>API</p>
         <ul>
             <li><a href="/api/profile">Profile</a></li>
