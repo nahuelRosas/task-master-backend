@@ -9,10 +9,16 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 
-const { PORT } = process.env;
 const app: Express = express();
 
-// Morgan Middleware Configuration
+/**
+ * Configures the options for the Morgan middleware.
+ *
+ * @param tokens - The token indexer.
+ * @param req - The incoming request.
+ * @param res - The server response.
+ * @returns Null or undefined.
+ */
 function configureMorganOptions(
   tokens: TokenIndexer,
   req: IncomingMessage,
