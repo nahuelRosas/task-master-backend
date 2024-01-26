@@ -1,10 +1,9 @@
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import colors from "colors";
 import path from "path";
 import fs from "fs";
-
-colors.enable();
 dotenv.config();
+colors.enable();
 
 const { TEMP_DIR } = process.env;
 
@@ -47,11 +46,10 @@ export function logInfo({
       return logInfo({ logMessage: err });
     }
   };
-
   const timestamp = Date.now();
   const humanReadableDateTime = new Date(timestamp).toLocaleString();
   const messageBase = `${humanReadableDateTime} ---- `;
-  const logDirectory = dir || TEMP_DIR || "./src/temp/Logs.log";
+  const logDirectory = dir || TEMP_DIR || "log/console.log";
   const basename = path.basename(currentFilename);
   const formattedLogMessage =
     typeof logMessage === "string"
