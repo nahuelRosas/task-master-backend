@@ -18,7 +18,7 @@ export async function login(req: Request, res: Response): Promise<void> {
   try {
     if (!JWT_SECRET) {
       logInfo({
-        logMessage: `Error creating user: Missing JWT secret`,
+        logMessage: `Error logging in: Missing JWT secret`,
         logType: "error",
       });
       res.status(500).send("Missing JWT secret");
@@ -26,7 +26,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     }
     if (!email || !password) {
       logInfo({
-        logMessage: `Error creating user: Missing parameters`,
+        logMessage: `Error logging in: Missing parameters`,
         logType: "error",
       });
       res.status(400).send("Missing parameters");
@@ -37,7 +37,7 @@ export async function login(req: Request, res: Response): Promise<void> {
 
     if (!user) {
       logInfo({
-        logMessage: `Error creating user: User not found`,
+        logMessage: `Error logging in: User not found`,
         logType: "error",
       });
       res.status(404).send("User not found");
@@ -47,7 +47,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) {
       logInfo({
-        logMessage: `Error creating user: Invalid password`,
+        logMessage: `Error logging in: Invalid password`,
         logType: "error",
       });
       res.status(401).send("Invalid password");
@@ -60,7 +60,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     });
 
     logInfo({
-      logMessage: `User ${user.username} created`,
+      logMessage: `User ${user.username} logged in`,
       logType: "success",
     });
     res.status(201).json({
@@ -73,7 +73,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     });
   } catch (error) {
     logInfo({
-      logMessage: `Error creating user: ${error}`,
+      logMessage: `Error logging in: ${error}`,
       logType: "error",
     });
     res.status(500).send(error);
