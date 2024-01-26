@@ -13,7 +13,7 @@ import { Response } from "express";
  */
 export async function createTask(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
@@ -24,7 +24,8 @@ export async function createTask(
       });
 
       const savedTask = await task.save();
-
+      user.tasks?.push(savedTask);
+      await user.save();
       res.status(201).json(savedTask);
     }
   } catch (error) {
