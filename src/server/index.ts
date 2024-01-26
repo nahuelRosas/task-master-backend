@@ -5,11 +5,8 @@ import cookieParser from "cookie-parser";
 import { logInfo } from "@/libs/logInfo";
 import compression from "compression";
 import bodyParser from "body-parser";
-import * as dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
-
-dotenv.config();
 
 const { PORT } = process.env;
 const app: Express = express();
@@ -67,7 +64,7 @@ app.use(
 // Server Setup
 export const server = app.listen(PORT || 3000, () => {
   logInfo({
-    logMessage: `Server running on port ${PORT}`,
+    logMessage: `Server running on port ${PORT || 3000}`,
     logType: "success",
   });
 });
