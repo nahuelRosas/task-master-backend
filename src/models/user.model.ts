@@ -1,6 +1,14 @@
-import { Schema, model } from "mongoose";
+import { Model, Schema, model } from "mongoose";
 
-const userSchema = new Schema({
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema: Schema = new Schema({
   username: {
     type: String,
     required: true,
@@ -20,8 +28,9 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  updatedAt: Date,
 });
 
-const User = model("User", userSchema);
+const User: Model<IUser> = model<IUser>("User", userSchema);
 
 export default User;

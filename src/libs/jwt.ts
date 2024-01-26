@@ -3,41 +3,60 @@ import { logInfo } from "./logInfo";
 import { Response } from "express";
 
 /**
- * Signs the payload with the provided secret or private key and options,
- * and creates a cookie with the encoded access token in the response.
- *
- * @param payload - The data to be signed (string, object, or buffer).
- * @param secretOrPrivateKey - The secret or private key used for signing.
- * @param options - The options for signing the payload (default: { expiresIn: "1d" }).
- * @param res - The response object to set the access token cookie.
+ * Signs the payload with the provided secret or private key and returns the encoded token.
+ * It also creates a cookie with the encoded token and sets it in the provided response object.
+ * @param secretOrPrivateKey - The secret or private key used to sign the token.
+ * @param payload - The data to be included in the token.
+ * @param res - The response object to set the token cookie.
+ * @param options - Optional sign options.
+ * @returns The encoded token or undefined if an error occurs.
+ * @throws If an error occurs while creating the access token.
  */
 export function Sign({
-  payload,
   secretOrPrivateKey,
+  payload,
+  res,
   options = {
     expiresIn: "1d",
   },
-  res,
 }: {
   payload: string | object | Buffer;
   secretOrPrivateKey: Secret;
   options?: SignOptions;
   res: Response;
-}): void {
-  function createCookie(err: Error | null, encoded: string | undefined) {
-    if (err) {
+}): string | undefined {
+  try {
+    const encoded = sign(payload, secretOrPrivateKey, options);
+    return createCookie({ encoded, res });
+  } catch (err) {
+    if (err instanceof Error) {
       logInfo({
         logMessage: `Error creating access token: ${err}`,
         logType: "error",
       });
       throw err;
     }
-    res.cookie("accessToken", encoded, {
-      httpOnly: true,
-      sameSite: "none",
-      secure: true,
-    });
-    return encoded;
   }
-  return sign(payload, secretOrPrivateKey, options, createCookie);
+}
+
+/**
+ * Creates a cookie with the provided encoded value and sets it in the response object.
+ * @param {Object} options - The options for creating the cookie.
+ * @param {string | undefined} options.encoded - The encoded value to be set as the cookie value.
+ * @param {Response} options.res - The response object to set the cookie in.
+ * @returns {string | undefined} The encoded value that was set as the cookie value.
+ */
+function createCookie({
+  encoded,
+  res,
+}: {
+  encoded: string | undefined;
+  res: Response;
+}): string | undefined {
+  res.cookie("accessToken", encoded, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+  return encoded;
 }
