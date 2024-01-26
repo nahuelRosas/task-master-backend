@@ -13,7 +13,7 @@ import Task from "@/models/task.model";
  */
 export async function deleteTask(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
@@ -27,8 +27,11 @@ export async function deleteTask(
         res.status(404).send("Task not found");
         return;
       }
-
-      res.status(200).json(task);
+      user.tasks = user.tasks?.filter(
+        (taskID) => taskID.toString() !== req.params.id
+      );
+      await user.save();
+      res.status(204);
     }
   } catch (error) {
     if (error instanceof Error) {
