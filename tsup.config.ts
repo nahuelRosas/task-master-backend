@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   format: ["cjs", "esm"],
-  external: ["express"],
+  // external: ["express"],
   target: "es2022",
   sourcemap: true,
   minify: "terser",
@@ -12,4 +12,5 @@ export default defineConfig({
   entry: {
     index: "./src/index.ts",
   },
+  minifyWhitespace: true,
 });
