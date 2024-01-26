@@ -8,6 +8,9 @@ export interface IUser {
   updatedAt: Date;
 }
 
+/**
+ * Represents the user schema.
+ */
 const userSchema: Schema = new Schema({
   username: {
     type: String,
