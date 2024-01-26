@@ -1,10 +1,21 @@
 import connectDataBase from "./database";
-import express from "express";
+import { logInfo } from "./libs/logInfo";
 import app from "./server";
 
-// Connect to the database.
-connectDataBase();
+const { PORT } = process.env;
 
-app.get("/ping", (req: express.Request, res: express.Response) => {
-  res.send("pong");
-});
+connectDataBase()
+  .then(() => {
+    app.listen(PORT || 3000, () =>
+      logInfo({
+        logMessage: `Server running on port ${PORT || 3000}`,
+        logType: "success",
+      })
+    );
+  })
+  .catch((err) => {
+    logInfo({
+      logMessage: `Error connecting to database: ${err}`,
+      logType: "error",
+    });
+  });
