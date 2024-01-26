@@ -13,8 +13,8 @@ app.use(
   morgan(configureMorganOptions),
   helmet(),
   cors({
-    origin: "https://client-rouge-two.vercel.app",
-    methods: "GET,PUT,POST,DELETE",
+    origin: "http://localhost:5173",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   }),
   express.json(),
