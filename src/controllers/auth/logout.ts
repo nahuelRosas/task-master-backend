@@ -8,7 +8,7 @@ import { logInfo } from "@/libs/log-info";
  */
 export function logout(req: Request, res: Response): void {
   try {
-    res.clearCookie("token");
+    res.clearCookie("accessToken");
     res.status(200).send("Logged out");
     logInfo({
       logMessage: `Logged out`,
