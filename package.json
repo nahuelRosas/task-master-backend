@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "tsup-node",
-    "dev": "tsup-node src/index.ts --watch --onSuccess 'node dist/index.js'",
+    "dev": "tsup-node src/index.ts --watch --onSuccess 'node dist/api/index.js'",
     "start": "node dist/api/index.js",
     "lint": "eslint \"src/**/*.ts*\"",
     "clean": "rimraf dist node_modules .pnpm-store .pnpm-lock.yaml coverage .nyc_output package-lock.json",

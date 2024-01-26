@@ -50,6 +50,16 @@ export function logInfo({
   const humanReadableDateTime = new Date(timestamp).toLocaleString();
   const messageBase = `${humanReadableDateTime} ---- `;
   const logDirectory = dir || TEMP_DIR || "log/console.log";
+  //check if exist logDirectory, if not, check any folder splited by "/" and create one by one and create file at the end
+  const dirArray = logDirectory.split("/");
+  let dirPath = "";
+  for (let i = 0; i < dirArray.length - 1; i++) {
+    dirPath += `${dirArray[i]}/`;
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath);
+    }
+  }
+
   const basename = path.basename(currentFilename);
   const formattedLogMessage =
     typeof logMessage === "string"
