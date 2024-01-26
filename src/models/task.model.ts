@@ -23,12 +23,18 @@ const taskSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    description: String,
+    description: {
+      type: String,
+      default: "",
+    },
     completed: {
       type: Boolean,
       default: false,
     },
-    tags: [String],
+    tags: {
+      type: [String],
+      default: [],
+    },
     dueDate: Date,
     priority: {
       type: String,

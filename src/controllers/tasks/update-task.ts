@@ -6,7 +6,7 @@ import Task from "@/models/task.model";
 
 export async function updateTask(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
@@ -17,6 +17,9 @@ export async function updateTask(
           owner: user._id,
         },
         req.body,
+        {
+          new: true,
+        }
       );
 
       if (!task) {
