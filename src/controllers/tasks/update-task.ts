@@ -20,13 +20,18 @@ export async function updateTask(
         {
           new: true,
         }
-      );
+      ).populate("owner");
 
       if (!task) {
         res.status(404).send("Task not found");
         return;
       }
 
+      user.tasks = user.tasks?.filter(
+        (taskID) => taskID.toString() !== req.params.id
+      );
+      user.tasks?.push(task);
+      await user.save();
       res.status(200).json(task);
     }
   } catch (error) {
