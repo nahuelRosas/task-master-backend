@@ -1,7 +1,8 @@
+import validateUser from "@/middlewares/validate-user";
 import { RequestWithUser } from "@/types/globals";
 import { logInfo } from "@/libs/log-info";
+import Task from "@/models/task.model";
 import { Response } from "express";
-import validateUser from "@/middlewares/validate-user";
 
 export async function getTasks(
   req: RequestWithUser,
@@ -9,14 +10,14 @@ export async function getTasks(
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
-    if (!user) {
-      return;
+    if (user) {
+      const tasks = await Task.find({ owner: user._id });
+      res.status(200).json(tasks);
     }
-    console.log(user);
   } catch (error) {
     if (error instanceof Error) {
       logInfo({
-        logMessage: `Error getting profile: ${error.message}`,
+        logMessage: `Error getting Tasks: ${error.message}`,
         logType: "error",
       });
       res.status(500).send(error.message);
