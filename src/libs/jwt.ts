@@ -53,6 +53,10 @@ function createCookie({
   encoded: string | undefined;
   res: Response;
 }): string | undefined {
-  res.cookie("accessToken", encoded);
+  res.cookie("accessToken", encoded, {
+    sameSite: "none",
+    secure: true,
+    httpOnly: false,
+  });
   return encoded;
 }
