@@ -26,7 +26,13 @@ export async function createTask(
       const savedTask = await task.save();
       user.tasks?.push(savedTask);
       await user.save();
-      res.status(201).json(savedTask);
+
+      const taskWithOwner = await Task.findById(savedTask._id).populate({
+        path: "owner",
+        select: "-tasks",
+      });
+
+      res.status(201).json(taskWithOwner);
     }
   } catch (error) {
     if (error instanceof Error) {
