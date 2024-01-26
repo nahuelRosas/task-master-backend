@@ -2,6 +2,7 @@ import { RequestWithUser } from "@/types/globals";
 import { logInfo } from "@/libs/log-info";
 import { Response } from "express";
 import validateUser from "@/middlewares/validate-user";
+import Task from "@/models/task.model";
 
 export async function updateTask(
   req: RequestWithUser,
@@ -9,10 +10,22 @@ export async function updateTask(
 ): Promise<void> {
   try {
     const user = await validateUser(req, res);
-    if (!user) {
-      return;
+    if (user) {
+      const task = await Task.findOneAndUpdate(
+        {
+          _id: req.params.id,
+          owner: user._id,
+        },
+        req.body
+      );
+
+      if (!task) {
+        res.status(404).send("Task not found");
+        return;
+      }
+
+      res.status(200).json(task);
     }
-    console.log(user);
   } catch (error) {
     if (error instanceof Error) {
       logInfo({
