@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { logInfo } from "@/libs/log-info";
 import User from "@/models/user.model";
-import { Sign } from "@/libs/jwt";
 import { compare } from "bcryptjs";
+import { Sign } from "@/libs/jwt";
 
 const { JWT_SECRET } = process.env;
 
