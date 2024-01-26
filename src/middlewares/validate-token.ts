@@ -1,23 +1,31 @@
-import { Request, Response, NextFunction } from "express";
+import { RequestWithUser } from "@/types/globals";
+import { Response, NextFunction } from "express";
 import { logInfo } from "@/libs/log-info";
+import { verify } from "jsonwebtoken";
+
+const { JWT_SECRET } = process.env;
 
 /**
- * Middleware function to validate the presence of an access token in the request.
- * If no access token is found, it logs an error and sends a 401 Unauthorized response.
- * Otherwise, it calls the next middleware function.
- *
- * @param req - The Express Request object.
- * @param res - The Express Response object.
- * @param next - The Express NextFunction.
+ * Validates the access token in the request headers and sets the authenticated user in the request object.
+ * If the access token is invalid or missing, it sends an appropriate error response.
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param next - The next function to call.
  */
 export function validateToken(
-  req: Request,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction
 ): void {
-  const { accessToken } = req.headers;
-
-  console.log("accessToken", accessToken);
+  const { accessToken } = req.cookies;
+  if (!JWT_SECRET) {
+    logInfo({
+      logMessage: "No JWT secret found in the environment",
+      logType: "error",
+    });
+    res.status(500).send("Internal Server Error");
+    return;
+  }
 
   if (!accessToken) {
     logInfo({
@@ -27,6 +35,15 @@ export function validateToken(
     res.status(401).send("Unauthorized");
     return;
   }
-
-  next();
+  try {
+    const user = verify(accessToken.toString(), JWT_SECRET);
+    req.user = user;
+    next();
+  } catch (error) {
+    logInfo({
+      logMessage: "Invalid access token",
+      logType: "error",
+    });
+    res.status(401).send("Unauthorized");
+  }
 }
