@@ -15,7 +15,9 @@ export function validateToken(
   res: Response,
   next: NextFunction
 ): void {
-  const { accessToken } = req.cookies;
+  const { accessToken } = req.headers;
+
+  console.log("accessToken", accessToken);
 
   if (!accessToken) {
     logInfo({
