@@ -7,6 +7,7 @@ export function validateRegisterUser(schema: Schema) {
   return function (req: RequestWithUser, res: Response, next: NextFunction) {
     try {
       const { error } = schema.parse(req.body);
+      console.log({ error });
       if (error) {
         logInfo({
           logMessage: `Error validating user: ${error.message}`,
