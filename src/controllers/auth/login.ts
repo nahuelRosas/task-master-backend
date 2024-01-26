@@ -1,5 +1,81 @@
 import { Request, Response } from "express";
+import { logInfo } from "@/libs/logInfo";
+import User from "@/models/user.model";
+import { Sign } from "@/libs/jwt";
+import { compare } from "bcryptjs";
 
-export function login(req: Request, res: Response) {
-  res.send("login");
+const { JWT_SECRET } = process.env;
+
+/**
+ * Handles the login functionality.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns A Promise that resolves to void.
+ */
+export async function login(req: Request, res: Response): Promise<void> {
+  const { email, password } = req.body;
+  try {
+    if (!JWT_SECRET) {
+      logInfo({
+        logMessage: `Error creating user: Missing JWT secret`,
+        logType: "error",
+      });
+      res.status(500).send("Missing JWT secret");
+      return;
+    }
+    if (!email || !password) {
+      logInfo({
+        logMessage: `Error creating user: Missing parameters`,
+        logType: "error",
+      });
+      res.status(400).send("Missing parameters");
+      return;
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      logInfo({
+        logMessage: `Error creating user: User not found`,
+        logType: "error",
+      });
+      res.status(404).send("User not found");
+      return;
+    }
+
+    const passwordMatch = await compare(password, user.password);
+    if (!passwordMatch) {
+      logInfo({
+        logMessage: `Error creating user: Invalid password`,
+        logType: "error",
+      });
+      res.status(401).send("Invalid password");
+      return;
+    }
+    const token = Sign({
+      payload: { userId: user._id },
+      secretOrPrivateKey: JWT_SECRET,
+      res,
+    });
+
+    logInfo({
+      logMessage: `User ${user.username} created`,
+      logType: "success",
+    });
+    res.status(201).json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      token,
+    });
+  } catch (error) {
+    logInfo({
+      logMessage: `Error creating user: ${error}`,
+      logType: "error",
+    });
+    res.status(500).send(error);
+  }
 }
