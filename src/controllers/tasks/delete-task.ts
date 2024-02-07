@@ -1,8 +1,9 @@
+import validateUser from "@/middlewares/validate-user";
 import { RequestWithUser } from "@/types/globals";
 import { logInfo } from "@/libs/log-info";
-import { Response } from "express";
-import validateUser from "@/middlewares/validate-user";
 import Task from "@/models/task.model";
+import { encode } from "html-entities";
+import { Response } from "express";
 
 /**
  * Deletes a task from the database.
@@ -39,8 +40,8 @@ export async function deleteTask(
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
-      return;
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

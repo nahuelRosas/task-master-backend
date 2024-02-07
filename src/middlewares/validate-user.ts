@@ -2,6 +2,7 @@ import { RequestWithUser } from "@/types/globals";
 import { JwtPayload } from "jsonwebtoken";
 import { logInfo } from "@/libs/log-info";
 import User from "@/models/user.model";
+import { encode } from "html-entities";
 import { Response } from "express";
 
 /**
@@ -48,8 +49,8 @@ export default async function validateUser({
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
-      return;
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

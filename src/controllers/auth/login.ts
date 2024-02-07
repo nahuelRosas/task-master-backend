@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { logInfo } from "@/libs/log-info";
 import User from "@/models/user.model";
+import { encode } from "html-entities";
 import { compare } from "bcryptjs";
 import { Sign } from "@/libs/jwt";
 import { z } from "zod";
@@ -33,7 +34,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     }
     if (!email || !password) {
       logInfo({
-        logMessage: `Error logging in: Missing parameters`,
+        logMessage: `Error logging in: Missing retuparameters`,
         logType: "error",
       });
       res.status(400).send("Missing parameters");
@@ -84,8 +85,8 @@ export async function login(req: Request, res: Response): Promise<void> {
         logMessage: `Error logging in: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
-      return;
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

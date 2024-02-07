@@ -1,8 +1,9 @@
+import validateUser from "@/middlewares/validate-user";
 import { RequestWithUser } from "@/types/globals";
 import { logInfo } from "@/libs/log-info";
-import { Response } from "express";
-import validateUser from "@/middlewares/validate-user";
 import Task from "@/models/task.model";
+import { encode } from "html-entities";
+import { Response } from "express";
 
 /**
  * Retrieves a task by its ID and owner.
@@ -34,8 +35,8 @@ export async function getTask(
         logMessage: `Error getting Task: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
-      return;
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

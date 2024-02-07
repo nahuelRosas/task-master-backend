@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { logInfo } from "@/libs/log-info";
+import { encode } from "html-entities";
 
 /**
  * Logs out the user by clearing the token cookie and sending a success message.
@@ -20,7 +21,8 @@ export function logout(_req: Request, res: Response): void {
         logMessage: `Error logging in: ${error}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

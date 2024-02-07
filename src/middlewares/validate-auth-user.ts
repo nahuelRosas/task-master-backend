@@ -1,6 +1,7 @@
 import { RequestWithUser } from "@/types/globals";
 import { Response, NextFunction } from "express";
 import { logInfo } from "@/libs/log-info";
+import { encode } from "html-entities";
 import { Schema } from "zod";
 
 /**
@@ -35,7 +36,8 @@ export function validateRegisterUser({
           logMessage: `Error validating user: ${error.message}`,
           logType: "error",
         });
-        res.status(500).send(JSON.stringify(error.message));
+        const encodedErrorMessage = encode(error.message);
+        res.status(500).send(encodedErrorMessage);
         return;
       }
     }

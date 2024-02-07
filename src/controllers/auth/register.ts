@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { logInfo } from "@/libs/log-info";
+import { encode } from "html-entities";
 import User from "@/models/user.model";
 import { Sign } from "@/libs/jwt";
 import { hash } from "bcryptjs";
@@ -60,7 +61,8 @@ export async function register(req: Request, res: Response): Promise<void> {
         logMessage: `Error creating user: ${error}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }

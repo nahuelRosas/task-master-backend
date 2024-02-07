@@ -1,6 +1,7 @@
 import validateUser from "@/middlewares/validate-user";
 import { RequestWithUser } from "@/types/globals";
 import { logInfo } from "@/libs/log-info";
+import { encode } from "html-entities";
 import Task from "@/models/task.model";
 import { Response } from "express";
 
@@ -40,8 +41,8 @@ export async function createTask(
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(JSON.stringify(error.message));
-      return;
+      const encodedErrorMessage = encode(error.message);
+      res.status(500).send(encodedErrorMessage);
     }
   }
 }
