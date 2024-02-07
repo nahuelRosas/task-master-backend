@@ -13,7 +13,7 @@ import Task from "@/models/task.model";
  */
 export async function deleteTask(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser({ req, res });
@@ -28,7 +28,7 @@ export async function deleteTask(
         return;
       }
       user.tasks = user.tasks?.filter(
-        (taskID) => taskID.toString() !== req.params.id,
+        (taskID) => taskID.toString() !== req.params.id
       );
       await user.save();
       res.status(204);
@@ -39,7 +39,7 @@ export async function deleteTask(
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(error.message);
+      res.status(500).send(JSON.stringify(error.message));
       return;
     }
   }

@@ -35,7 +35,7 @@ export function validateRegisterUser({
           logMessage: `Error validating user: ${error.message}`,
           logType: "error",
         });
-        res.status(500).send(error.message);
+        res.status(500).send(JSON.stringify(error.message));
         return;
       }
     }

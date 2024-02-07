@@ -13,7 +13,7 @@ import Task from "@/models/task.model";
  */
 export async function getTask(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser({ req, res });
@@ -34,7 +34,7 @@ export async function getTask(
         logMessage: `Error getting Task: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(error.message);
+      res.status(500).send(JSON.stringify(error.message));
       return;
     }
   }

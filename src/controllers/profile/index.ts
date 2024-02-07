@@ -12,7 +12,7 @@ import { Response } from "express";
  */
 export async function getProfile(
   req: RequestWithUser,
-  res: Response,
+  res: Response
 ): Promise<void> {
   try {
     const user = await validateUser({ req, res });
@@ -42,7 +42,7 @@ export async function getProfile(
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(error.message);
+      res.status(500).send(JSON.stringify(error.message));
       return;
     }
   }

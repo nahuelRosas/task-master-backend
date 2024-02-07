@@ -13,8 +13,8 @@ app.use(
   morgan(configureMorganOptions),
   helmet(),
   cors({
-    origin: "http://localhost:5173",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: "*",
+    methods: "GET,PUT,POST,DELETE",
     credentials: true,
   }),
   express.json(),
@@ -23,7 +23,7 @@ app.use(
   bodyParser.urlencoded({ limit: "50mb", extended: true }),
   cookieParser(),
   compression(),
-  routes,
+  routes
 );
 
 export default app;

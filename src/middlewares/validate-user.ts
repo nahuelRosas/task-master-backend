@@ -48,7 +48,7 @@ export default async function validateUser({
         logMessage: `Error getting profile: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(error.message);
+      res.status(500).send(JSON.stringify(error.message));
       return;
     }
   }

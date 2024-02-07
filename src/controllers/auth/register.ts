@@ -55,10 +55,12 @@ export async function register(req: Request, res: Response): Promise<void> {
       token,
     });
   } catch (error) {
-    logInfo({
-      logMessage: `Error creating user: ${error}`,
-      logType: "error",
-    });
-    res.status(500).send(error);
+    if (error instanceof Error) {
+      logInfo({
+        logMessage: `Error creating user: ${error}`,
+        logType: "error",
+      });
+      res.status(500).send(JSON.stringify(error.message));
+    }
   }
 }

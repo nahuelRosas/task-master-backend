@@ -15,10 +15,12 @@ export function logout(_req: Request, res: Response): void {
       logType: "info",
     });
   } catch (error) {
-    logInfo({
-      logMessage: `Error logging in: ${error}`,
-      logType: "error",
-    });
-    res.status(500).send(error);
+    if (error instanceof Error) {
+      logInfo({
+        logMessage: `Error logging in: ${error}`,
+        logType: "error",
+      });
+      res.status(500).send(JSON.stringify(error.message));
+    }
   }
 }
