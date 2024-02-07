@@ -3,8 +3,14 @@ import { logInfo } from "@/libs/log-info";
 import User from "@/models/user.model";
 import { compare } from "bcryptjs";
 import { Sign } from "@/libs/jwt";
+import { z } from "zod";
 
 const { JWT_SECRET } = process.env;
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
 
 /**
  * Handles the login functionality.
@@ -13,8 +19,9 @@ const { JWT_SECRET } = process.env;
  * @param res - The response object.
  * @returns A Promise that resolves to void.
  */
+
 export async function login(req: Request, res: Response): Promise<void> {
-  const { email, password } = req.body;
+  const { email, password } = loginSchema.parse(req.body);
   try {
     if (!JWT_SECRET) {
       logInfo({
@@ -77,7 +84,7 @@ export async function login(req: Request, res: Response): Promise<void> {
         logMessage: `Error logging in: ${error.message}`,
         logType: "error",
       });
-      res.status(500).send(error.message);
+      res.status(500).send(JSON.stringify(error.message));
       return;
     }
   }
