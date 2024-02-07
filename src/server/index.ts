@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import bodyParser from "body-parser";
 import routes from "@/routes";
+import { csrf } from "lusca";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
@@ -22,6 +23,7 @@ app.use(
   bodyParser.json({ limit: "50mb" }),
   bodyParser.urlencoded({ limit: "50mb", extended: true }),
   cookieParser(),
+  csrf(),
   compression(),
   routes
 );

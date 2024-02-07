@@ -4,6 +4,27 @@ import { logInfo } from "@/libs/log-info";
 import Task from "@/models/task.model";
 import { encode } from "html-entities";
 import { Response } from "express";
+import { z } from "zod";
+
+const priorityEnum: { [key: string]: string } = {
+  low: "low",
+  medium: "medium",
+  high: "high",
+  urgent: "urgent",
+};
+
+const updateTaskSchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+  completed: z.boolean().optional(),
+  tags: z.array(z.string()).optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  dueDate: z.date().optional(),
+  priority: z.nativeEnum(priorityEnum).optional(),
+  assignedTo: z.string().optional(),
+  subtasks: z.array(z.unknown()).optional(),
+});
 
 export async function updateTask(
   req: RequestWithUser,
@@ -17,7 +38,7 @@ export async function updateTask(
           _id: req.params.id,
           owner: user._id,
         },
-        req.body,
+        updateTaskSchema.parse(req.body),
         {
           new: true,
         }
