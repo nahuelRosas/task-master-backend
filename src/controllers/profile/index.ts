@@ -15,7 +15,7 @@ export async function getProfile(
   res: Response,
 ): Promise<void> {
   try {
-    const user = await validateUser(req, res);
+    const user = await validateUser({ req, res });
     if (user) {
       res.status(200).json({
         id: user._id,

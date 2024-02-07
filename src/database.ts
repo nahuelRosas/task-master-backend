@@ -19,10 +19,11 @@ async function connectDataBase(): Promise<void> {
     });
   } catch (data) {
     logInfo({
-      logMessage: `Error ${data}`,
+      logMessage: `${data}`,
       filename: __filename,
       logType: "error",
     });
+    process.exit(1);
   }
 }
 

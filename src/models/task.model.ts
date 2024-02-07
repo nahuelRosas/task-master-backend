@@ -1,5 +1,8 @@
 import mongoose, { Model, Schema, model } from "mongoose";
 
+/**
+ * Represents a task.
+ */
 export interface ITask {
   name: string;
   description: string;
@@ -50,9 +53,12 @@ const taskSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
+/**
+ * Represents a Task model.
+ */
 const Task: Model<ITask> = model<ITask>("Task", taskSchema);
 
 export default Task;

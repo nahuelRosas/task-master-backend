@@ -13,10 +13,10 @@ import Task from "@/models/task.model";
  */
 export async function getTask(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
-    const user = await validateUser(req, res);
+    const user = await validateUser({ req, res });
     if (user) {
       const task = await Task.findOne({
         _id: req.params.id,

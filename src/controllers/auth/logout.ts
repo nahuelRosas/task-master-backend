@@ -3,10 +3,10 @@ import { logInfo } from "@/libs/log-info";
 
 /**
  * Logs out the user by clearing the token cookie and sending a success message.
- * @param req - The request object.
+ * @param _req - The request object.
  * @param res - The response object.
  */
-export function logout(req: Request, res: Response): void {
+export function logout(_req: Request, res: Response): void {
   try {
     res.clearCookie("accessToken");
     res.status(200).send("Logged out");

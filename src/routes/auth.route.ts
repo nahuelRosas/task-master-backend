@@ -2,10 +2,14 @@ import { validateRegisterUser } from "@/middlewares/validate-auth-user";
 import { registerSchema, loginSchema } from "@/schemas/auth.schema";
 import { login, register, logout } from "@/controllers/auth";
 import { Router } from "express";
-const router = Router();
+const routerAuth: Router = Router();
 
-router.post("/register", validateRegisterUser(registerSchema), register);
-router.post("/logout", logout);
-router.post("/login", validateRegisterUser(loginSchema), login);
+routerAuth.post(
+  "/register",
+  validateRegisterUser({ schema: registerSchema }),
+  register,
+);
+routerAuth.post("/logout", logout);
+routerAuth.post("/login", validateRegisterUser({ schema: loginSchema }), login);
 
-export default router;
+export default routerAuth;

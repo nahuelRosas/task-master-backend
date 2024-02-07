@@ -7,12 +7,12 @@ import {
   getTasks,
   getTask,
 } from "@/controllers/tasks";
-const router = Router();
+const routerTasks: Router = Router();
 
-router.get("/tasks", validateToken, getTasks);
-router.get("/tasks/:id", validateToken, getTask);
-router.post("/tasks", validateToken, createTask);
-router.delete("/tasks/:id", validateToken, deleteTask);
-router.put("/tasks/:id", validateToken, updateTask);
+routerTasks.get("/tasks", validateToken, getTasks);
+routerTasks.get("/tasks/:id", validateToken, getTask);
+routerTasks.post("/tasks", validateToken, createTask);
+routerTasks.delete("/tasks/:id", validateToken, deleteTask);
+routerTasks.put("/tasks/:id", validateToken, updateTask);
 
-export default router;
+export default routerTasks;

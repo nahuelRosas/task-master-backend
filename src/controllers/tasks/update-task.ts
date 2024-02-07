@@ -6,10 +6,10 @@ import Task from "@/models/task.model";
 
 export async function updateTask(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
-    const user = await validateUser(req, res);
+    const user = await validateUser({ req, res });
     if (user) {
       const task = await Task.findOneAndUpdate(
         {
@@ -19,7 +19,7 @@ export async function updateTask(
         req.body,
         {
           new: true,
-        }
+        },
       ).populate("owner");
 
       if (!task) {
@@ -28,7 +28,7 @@ export async function updateTask(
       }
 
       user.tasks = user.tasks?.filter(
-        (taskID) => taskID.toString() !== req.params.id
+        (taskID) => taskID.toString() !== req.params.id,
       );
       user.tasks?.push(task);
       await user.save();

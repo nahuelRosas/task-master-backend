@@ -13,10 +13,10 @@ import Task from "@/models/task.model";
  */
 export async function deleteTask(
   req: RequestWithUser,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
-    const user = await validateUser(req, res);
+    const user = await validateUser({ req, res });
     if (user) {
       const task = await Task.findOneAndDelete({
         _id: req.params.id,
@@ -28,7 +28,7 @@ export async function deleteTask(
         return;
       }
       user.tasks = user.tasks?.filter(
-        (taskID) => taskID.toString() !== req.params.id
+        (taskID) => taskID.toString() !== req.params.id,
       );
       await user.save();
       res.status(204);

@@ -11,10 +11,13 @@ import { Response } from "express";
  * @param res - The response object used to send the error response.
  * @returns The user object if found, otherwise undefined.
  */
-export default async function validateUser(
-  req: RequestWithUser,
-  res: Response,
-) {
+export default async function validateUser({
+  req,
+  res,
+}: {
+  req: RequestWithUser;
+  res: Response;
+}) {
   try {
     if (!req.user) {
       logInfo({

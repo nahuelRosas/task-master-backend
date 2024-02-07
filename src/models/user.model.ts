@@ -1,6 +1,9 @@
 import { Model, Schema, model } from "mongoose";
 import { ITask } from "./task.model";
 
+/**
+ * Represents a user in the system.
+ */
 export interface IUser {
   id: number;
   username: string;
@@ -63,9 +66,12 @@ const userSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
+/**
+ * Represents a user in the system.
+ */
 const User: Model<IUser> = model<IUser>("User", userSchema);
 
 export default User;
